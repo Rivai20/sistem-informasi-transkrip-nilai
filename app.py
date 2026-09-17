@@ -33,7 +33,7 @@ def create_app():
             if current_user.role == 'tata_usaha':
                 return redirect(url_for('admin_dashboard'))
             return redirect(url_for('student_dashboard'))
-        return redirect(url_for('login'))
+        return render_template('home.html')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():

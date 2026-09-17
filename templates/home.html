@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Beranda{% endblock %}
+{% block content %}
+<section class="home-hero mb-4">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-8">
+      <p class="text-uppercase fw-semibold mb-2">Sistem Informasi Akademik</p>
+      <h1 class="display-5 mb-3">Kelola dan akses transkrip nilai dengan mudah.</h1>
+      <p class="lead mb-4">Platform terpusat untuk mahasiswa dan tata usaha dalam menyimpan, mengelola, serta mengunduh transkrip nilai.</p>
+      <a class="btn btn-light btn-lg" href="{{ url_for('login') }}">Login</a>
+    </div>
+  </div>
+</section>
+
+<section class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="card home-feature shadow-sm p-4">
+      <h2 class="h5">Akses Mahasiswa</h2>
+      <p class="text-muted mb-0">Lihat dan unduh transkrip nilai pribadi kapan saja.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card home-feature shadow-sm p-4">
+      <h2 class="h5">Manajemen Data</h2>
+      <p class="text-muted mb-0">Tata usaha dapat mengelola data mahasiswa secara teratur.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card home-feature shadow-sm p-4">
+      <h2 class="h5">Dokumen Terpusat</h2>
+      <p class="text-muted mb-0">Simpan dan distribusikan dokumen transkrip dalam format PDF.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

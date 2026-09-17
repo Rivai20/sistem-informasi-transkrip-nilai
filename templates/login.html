@@ -15,7 +15,10 @@
             <label class="form-label">Password</label>
             <input name="password" type="password" class="form-control" required>
           </div>
-          <button class="btn btn-primary">Masuk</button>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary">Masuk</button>
+            <a class="btn btn-primary" href="{{ url_for('index') }}">Kembali</a>
+          </div>
         </form>
       </div>
     </div>
