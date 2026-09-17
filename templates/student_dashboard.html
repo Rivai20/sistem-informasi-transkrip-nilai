@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Mahasiswa{% endblock %}
+{% block content %}
+<h3>Halo, {{ current_user.name }}</h3>
+<p>NIK: {{ current_user.nik }}</p>
+<h5>Transkrip</h5>
+<ul class="list-group">
+  {% for t in transcripts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ t.filename }}
+      <div>
+        <a class="btn btn-sm btn-outline-success" href="/download/{{ t.filename }}">Unduh</a>
+      </div>
+    </li>
+  {% else %}
+    <li class="list-group-item">Belum ada transkrip.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

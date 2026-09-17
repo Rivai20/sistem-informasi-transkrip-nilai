@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Edit Mahasiswa{% endblock %}
+{% block content %}
+<h3>Edit Mahasiswa</h3>
+<form method="post">
+  <div class="mb-3"><label>NIK</label><input name="nik" value="{{ student.nik }}" class="form-control" required></div>
+  <div class="mb-3"><label>Nama</label><input name="name" value="{{ student.name }}" class="form-control" required></div>
+  <div class="mb-3"><label>Password (kosongkan jika tidak ingin mengubah)</label><input name="password" type="password" class="form-control"></div>
+  <button class="btn btn-primary">Simpan</button>
+</form>
+{% endblock %}

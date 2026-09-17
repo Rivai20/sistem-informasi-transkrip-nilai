@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Dashboard Tata Usaha</h3>
+  <a href="/admin/student/create" class="btn btn-success">Buat Mahasiswa</a>
+</div>
+<table class="table table-striped">
+  <thead><tr><th>NIK</th><th>Nama</th><th>Aksi</th></tr></thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td>{{ s.nik }}</td>
+      <td>{{ s.name }}</td>
+      <td>
+        <a class="btn btn-sm btn-primary" href="/admin/student/{{ s.id }}/edit">Edit</a>
+        <a class="btn btn-sm btn-secondary" href="/admin/upload/{{ s.id }}">Upload Transkrip</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

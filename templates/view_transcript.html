@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Lihat Transkrip{% endblock %}
+{% block content %}
+<h4>Transkrip: {{ transcript.filename }}</h4>
+<div class="ratio ratio-4x3">
+  <iframe src="/download/{{ transcript.filename }}" style="border:0"></iframe>
+</div>
+<a class="btn btn-success mt-3" href="/download/{{ transcript.filename }}">Unduh</a>
+{% endblock %}

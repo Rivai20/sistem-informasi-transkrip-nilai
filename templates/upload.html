@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Upload Transkrip{% endblock %}
+{% block content %}
+<h3>Upload Transkrip untuk {{ student.name }}</h3>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3"><input type="file" name="file" accept="application/pdf" required></div>
+  <button class="btn btn-primary">Unggah</button>
+</form>
+{% endblock %}
