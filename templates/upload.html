@@ -4,6 +4,9 @@
 <h3>Upload Transkrip untuk {{ student.name }}</h3>
 <form method="post" enctype="multipart/form-data">
   <div class="mb-3"><input type="file" name="file" accept="application/pdf" required></div>
-  <button class="btn btn-primary">Unggah</button>
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary">Unggah</button>
+    <a class="btn btn-primary" href="{{ url_for('admin_dashboard') }}">Kembali</a>
+  </div>
 </form>
 {% endblock %}

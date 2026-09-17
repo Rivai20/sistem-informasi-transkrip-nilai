@@ -1,23 +1,82 @@
 {% extends 'base.html' %}
 {% block title %}Admin{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3>Dashboard Tata Usaha</h3>
-  <a href="/admin/student/create" class="btn btn-success">Buat Mahasiswa</a>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__brand">
+      <span class="admin-sidebar__eyebrow">Panel Pengelola</span>
+      <strong>Tata Usaha</strong>
+    </div>
+    <nav aria-label="Navigasi admin">
+      <a class="admin-nav-link active" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+      <a class="admin-nav-link" href="#daftar-mahasiswa">Kelola Mahasiswa</a>
+      <a class="admin-nav-link" href="{{ url_for('create_student') }}">Tambah Mahasiswa</a>
+      <a class="admin-nav-link" href="{{ url_for('admin_transcripts') }}">Arsip Transkrip</a>
+      <a class="admin-nav-link" href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </aside>
+
+  <section class="admin-content">
+    <div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+      <div>
+        <p class="admin-kicker mb-1">Ringkasan sistem</p>
+        <h1 class="h3 mb-1">Dashboard Tata Usaha</h1>
+        <p class="text-muted mb-0">Kelola data mahasiswa dan arsip transkrip dari satu tempat.</p>
+      </div>
+      <a href="{{ url_for('create_student') }}" class="btn btn-success">Tambah Mahasiswa</a>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="admin-stat">
+          <span class="admin-stat__label">Total Mahasiswa</span>
+          <strong>{{ students|length }}</strong>
+          <span class="text-muted">akun mahasiswa terdaftar</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="admin-stat">
+          <span class="admin-stat__label">Arsip Transkrip</span>
+          <strong>{{ transcript_count }}</strong>
+          <span class="text-muted">dokumen tersimpan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-panel" id="daftar-mahasiswa">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h2 class="h5 mb-1">Daftar Mahasiswa</h2>
+          <p class="text-muted small mb-0">Kelola akun dan dokumen transkrip mahasiswa.</p>
+        </div>
+        <span class="badge text-bg-light">{{ students|length }} akun</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle mb-0">
+          <thead><tr><th>NIK</th><th>Nama</th><th>Aksi</th></tr></thead>
+          <tbody>
+            {% for s in students %}
+            <tr>
+              <td>{{ s.nik }}</td>
+              <td>{{ s.name }}</td>
+              <td>
+                <a class="btn btn-sm btn-primary" href="{{ url_for('edit_student', user_id=s.id) }}">Edit</a>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('upload_transcript', user_id=s.id) }}">Upload Transkrip</a>
+              </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" class="text-muted">Belum ada mahasiswa terdaftar.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel admin-panel--notice mt-3">
+      <h2 class="h6">Aksi cepat</h2>
+      <p class="text-muted mb-2">Pilih mahasiswa dari daftar untuk mengedit data atau mengunggah dokumen transkrip PDF.</p>
+      <a href="{{ url_for('admin_transcripts') }}" class="btn btn-sm btn-outline-primary">Lihat Arsip Transkrip</a>
+    </div>
+  </section>
 </div>
-<table class="table table-striped">
-  <thead><tr><th>NIK</th><th>Nama</th><th>Aksi</th></tr></thead>
-  <tbody>
-    {% for s in students %}
-    <tr>
-      <td>{{ s.nik }}</td>
-      <td>{{ s.name }}</td>
-      <td>
-        <a class="btn btn-sm btn-primary" href="/admin/student/{{ s.id }}/edit">Edit</a>
-        <a class="btn btn-sm btn-secondary" href="/admin/upload/{{ s.id }}">Upload Transkrip</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 {% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Arsip Transkrip{% endblock %}
+{% block content %}
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__brand">
+      <span class="admin-sidebar__eyebrow">Panel Pengelola</span>
+      <strong>Tata Usaha</strong>
+    </div>
+    <nav aria-label="Navigasi admin">
+      <a class="admin-nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+      <a class="admin-nav-link" href="{{ url_for('admin_dashboard') }}#daftar-mahasiswa">Kelola Mahasiswa</a>
+      <a class="admin-nav-link" href="{{ url_for('create_student') }}">Tambah Mahasiswa</a>
+      <a class="admin-nav-link active" href="{{ url_for('admin_transcripts') }}">Arsip Transkrip</a>
+      <a class="admin-nav-link" href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </aside>
+
+  <section class="admin-content">
+    <div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+      <div>
+        <p class="admin-kicker mb-1">Dokumen akademik</p>
+        <h1 class="h3 mb-1">Arsip Transkrip</h1>
+        <p class="text-muted mb-0">Daftar seluruh file transkrip yang telah diunggah oleh tata usaha.</p>
+      </div>
+      <a class="btn btn-primary" href="{{ url_for('admin_dashboard') }}">Kembali</a>
+    </div>
+    <div class="admin-panel">
+      <div class="table-responsive">
+        <table class="table table-striped align-middle mb-0">
+          <thead><tr><th>Mahasiswa</th><th>NIK</th><th>Nama File</th><th>Diunggah</th><th>Aksi</th></tr></thead>
+          <tbody>
+            {% for transcript in transcripts %}
+            <tr>
+              <td>{{ transcript.user.name }}</td>
+              <td>{{ transcript.user.nik }}</td>
+              <td>{{ transcript.filename }}</td>
+              <td>{{ transcript.uploaded_at.strftime('%d-%m-%Y %H:%M') if transcript.uploaded_at else '-' }}</td>
+              <td><a class="btn btn-sm btn-primary" href="{{ url_for('download_file', filename=transcript.filename) }}">Unduh</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="text-muted">Belum ada transkrip yang diarsipkan.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

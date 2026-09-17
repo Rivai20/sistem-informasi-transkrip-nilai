@@ -52,7 +52,7 @@ def create_app():
     @login_required
     def logout():
         logout_user()
-        return redirect(url_for('login'))
+        return redirect(url_for('index'))
 
     @app.route('/admin')
     @login_required
@@ -60,7 +60,20 @@ def create_app():
         if current_user.role != 'tata_usaha':
             abort(403)
         students = User.query.filter_by(role='mahasiswa').all()
-        return render_template('admin_dashboard.html', students=students)
+        transcript_count = Transcript.query.count()
+        return render_template(
+            'admin_dashboard.html',
+            students=students,
+            transcript_count=transcript_count
+        )
+
+    @app.route('/admin/transcripts')
+    @login_required
+    def admin_transcripts():
+        if current_user.role != 'tata_usaha':
+            abort(403)
+        transcripts = Transcript.query.order_by(Transcript.uploaded_at.desc()).all()
+        return render_template('admin_transcripts.html', transcripts=transcripts)
 
     @app.route('/admin/student/<int:user_id>/edit', methods=['GET', 'POST'])
     @login_required
@@ -129,11 +142,19 @@ def create_app():
     @login_required
     def view_transcript(tid):
         t = Transcript.query.get_or_404(tid)
-        # students can only view their own transcripts; tata usaha can view all
         if current_user.role == 'mahasiswa' and t.user_id != current_user.id:
             abort(403)
-        # remove inline viewing; force download only
-        return redirect(url_for('download_file', filename=t.filename))
+        return render_template('view_transcript.html', transcript=t)
+
+    @app.route('/preview/<filename>')
+    @login_required
+    def preview_file(filename):
+        t = Transcript.query.filter_by(filename=filename).first()
+        if not t:
+            abort(404)
+        if current_user.role == 'mahasiswa' and t.user_id != current_user.id:
+            abort(403)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=False)
 
     @app.route('/download/<filename>')
     @login_required
@@ -150,4 +171,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)

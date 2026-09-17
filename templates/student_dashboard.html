@@ -1,19 +1,60 @@
 {% extends 'base.html' %}
 {% block title %}Mahasiswa{% endblock %}
 {% block content %}
-<h3>Halo, {{ current_user.name }}</h3>
-<p>NIK: {{ current_user.nik }}</p>
-<h5>Transkrip</h5>
-<ul class="list-group">
-  {% for t in transcripts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      {{ t.filename }}
-      <div>
-        <a class="btn btn-sm btn-outline-success" href="/download/{{ t.filename }}">Unduh</a>
+<section class="student-welcome mb-4">
+  <div>
+    <p class="student-kicker mb-2">Portal Mahasiswa</p>
+    <h1 class="h2 mb-2">Selamat datang, {{ current_user.name }}</h1>
+    <p class="mb-0">Akses dokumen transkrip nilai Anda dengan cepat dan aman.</p>
+  </div>
+  <div class="student-avatar" aria-hidden="true">{{ current_user.name[:1]|upper }}</div>
+</section>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-7">
+    <div class="student-info-card h-100">
+      <span class="student-card-label">Identitas mahasiswa</span>
+      <strong>{{ current_user.name }}</strong>
+      <span>NIK {{ current_user.nik }}</span>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="student-info-card student-info-card--accent h-100">
+      <span class="student-card-label">Total dokumen</span>
+      <strong>{{ transcripts|length }}</strong>
+      <span>transkrip tersedia untuk diunduh</span>
+    </div>
+  </div>
+</div>
+
+<section class="student-documents">
+  <div class="d-flex justify-content-between align-items-end mb-3">
+    <div>
+      <p class="student-kicker mb-1">Pusat dokumen</p>
+      <h2 class="h4 mb-1">Transkrip Nilai</h2>
+      <p class="text-muted mb-0">Dokumen yang telah diunggah oleh tata usaha.</p>
+    </div>
+    <span class="badge rounded-pill text-bg-primary">{{ transcripts|length }} dokumen</span>
+  </div>
+  <div class="student-document-list">
+    {% for t in transcripts %}
+      <div class="student-document-item">
+        <div class="student-document-icon">PDF</div>
+        <div class="student-document-name">
+          <strong>{{ t.filename }}</strong>
+          <span>Dokumen transkrip nilai</span>
+        </div>
+        <div class="student-document-actions">
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('view_transcript', tid=t.id) }}">Lihat</a>
+          <a class="btn btn-sm btn-primary" href="{{ url_for('download_file', filename=t.filename) }}">Unduh</a>
+        </div>
       </div>
-    </li>
-  {% else %}
-    <li class="list-group-item">Belum ada transkrip.</li>
-  {% endfor %}
-</ul>
+    {% else %}
+      <div class="student-empty-state">
+        <strong>Belum ada transkrip</strong>
+        <span>Dokumen Anda akan tampil di sini setelah diunggah oleh tata usaha.</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

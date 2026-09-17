@@ -1,27 +1,35 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h4 class="card-title mb-3">Login</h4>
-        <form method="post">
-          <div class="mb-3">
-            <label class="form-label">NIK</label>
-            <input name="nik" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input name="password" type="password" class="form-control" required>
-          </div>
-          <div class="d-flex gap-2">
-            <button class="btn btn-primary">Masuk</button>
-            <a class="btn btn-primary" href="{{ url_for('index') }}">Kembali</a>
-          </div>
-        </form>
+<div class="login-shell">
+  <div class="login-intro">
+    <p class="login-kicker mb-2">Sistem Informasi Akademik</p>
+    <h1>Selamat datang kembali.</h1>
+    <p>Masuk untuk mengakses arsip transkrip nilai dan layanan akademik Anda.</p>
+  </div>
+  <div class="login-card">
+    <div class="login-card__header">
+      <span class="login-mark">ST</span>
+      <div>
+        <p class="login-kicker mb-1">Akses akun</p>
+        <h2>Login</h2>
       </div>
     </div>
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label" for="nik">NIK</label>
+        <input id="nik" name="nik" class="form-control" placeholder="Masukkan NIK" autocomplete="username" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="Masukkan password" autocomplete="current-password" required>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary flex-grow-1">Login</button>
+        <a class="btn btn-primary" href="{{ url_for('index') }}">Kembali</a>
+      </div>
+    </form>
+    <p class="login-note mb-0">Gunakan akun yang telah diberikan oleh tata usaha.</p>
   </div>
 </div>
 {% endblock %}
